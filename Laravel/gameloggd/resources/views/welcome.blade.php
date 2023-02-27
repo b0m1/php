@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gameloggd</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+
+    <!-- Styles -->
+    <style>
+        html,
+        body,
+        div,
+        span,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        pre,
+        del,
+        em,
+        img,
+        b,
+        i,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        form,
+        table,
+        tbody,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        footer,
+        header,
+        nav,
+        section {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+            background: transparent;
+            box-sizing: border-box
+        }
+
+        article,
+        aside,
+        footer,
+        header,
+        nav,
+        section {
+            display: block
+        }
+
+        body {
+            line-height: 1;
+            overflow-wrap: break-word;
+            word-wrap: break-word
+        }
+
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            vertical-align: middle;
+            box-sizing: border-box
+        }
+
+        a {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            outline: none;
+            font-size: 100%;
+            vertical-align: baseline;
+            background: transparent
+        }
+
+        a img {
+            border-style: none
+        }
+
+        ul,
+        li {
+            list-style-type: none
+        }
+
+        .cf:before,
+        .cf:after {
+            content: " ";
+            display: table
+        }
+
+        .cf:after {
+            clear: both
+        }
+
+        /* この上はいじらないほうがいいです */
+
+        /* ===================================
+背景,文字,リンク設定
+=================================== */
+
+        html {
+            font-size: 62.5%
+        }
+
+        body {
+            background: #fff;
+            /* 背景色 */
+            color: #6d5f5d;
+            /* 文字色 */
+            font-size: 1.2em;
+            /* 文字の大きさ */
+            font-family: 'Segoe UI', '游ゴシック Medium', 'Yu Gothic Medium', '游ゴシック体', YuGothic, 'Hiragino Kaku Gothic ProN', 'メイリオ', Meiryo, sans-serif;
+            letter-spacing: .1em;
+            line-height: 1.5;
+            text-align: center
+        }
+
+        /*  リンク
+------------------------------ */
+        a {
+            color: #6d5f5d
+        }
+
+        a:hover {
+            color: #fcc
+        }
+
+        #main a {
+            color: #bbd9d9;
+            text-decoration: underline;
+            text-decoration-color: #ccc
+                /* 一部ブラウザのみ */
+        }
+
+        #index a {
+            background: #fcc;
+            border-radius: 3px;
+            color: #6d5f5d
+        }
+
+        /* ===================================
+基本
+=================================== */
+
+        #wrapper {
+            margin: 20px auto;
+            width: 604px
+                /* #mainの幅+#menuの幅+4*/
+        }
+
+        header {
+            min-height: 50px
+        }
+
+        #contents {
+            background: url(image/back01.gif) no-repeat 0% 100%;
+            border: 2px dashed #fcc;
+            height: 400px;
+            /* 高さ */
+            text-align: left
+        }
+
+        #main,
+        #menu {
+            height: 100%
+        }
+
+        #menu {
+            float: left;
+            width: 200px
+                /* メニュー幅 */
+        }
+
+        #menu-inner {
+            height: 100%;
+            overflow: auto;
+            padding: 20px
+        }
+
+        #main {
+            float: right;
+            overflow: auto;
+            width: 400px
+                /* メイン幅 */
+        }
+
+        #main-inner {
+            padding: 20px
+        }
+
+        footer {
+            text-align: right
+        }
+
+        /* ===================================
+index
+=================================== */
+
+        #index {
+            background: url(image/back01.gif) #fff no-repeat 0% 0%;
+            margin: 20px;
+            text-align: left
+        }
+
+        /* ===================================
+メニュー
+=================================== */
+
+        nav {
+            padding: 0 0 20px
+        }
+
+        nav li {
+            padding: 5px 0
+        }
+
+        nav li a:hover {
+            color: #fcc
+        }
+
+        nav li a,
+        nav li span {
+            color: #6d5f5d;
+            font-weight: 700;
+            display: block;
+            position: relative
+        }
+
+        nav li a:hover,
+        nav li span:hover {
+            color: #fcc
+        }
+
+        .sub-menu {
+            display: none;
+            margin: 0;
+            overflow: hidden
+        }
+
+        .sub-menu li {
+            text-indent: 1em
+        }
+
+        /*  メニューの「>」
+------------------------------ */
+        nav li span:after {
+            border-top: 2px solid #6d5f5d;
+            /* 色 */
+            border-right: 2px solid #6d5f5d;
+            /* 色 */
+            content: "";
+            display: block;
+            margin-top: -5px;
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            height: 5px;
+            width: 5px;
+            -ms-transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            transition: .5s
+        }
+
+        nav li span.open:after {
+            -ms-transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+            transform: rotate(135deg)
+        }
+
+        /* ===================================
+見出し、枠、線
+=================================== */
+
+        h1 {
+            font-size: 1.4em;
+            text-align: left
+        }
+
+        h2 {
+            color: #bbd9d9;
+            font-size: 1.4em;
+            margin: 10px 0
+        }
+
+        h2:before {
+            content: "\2605";
+            color: #6d5f5d;
+            font-size: 1.4em
+        }
+
+        h3 {
+            background: #fcc;
+            border-radius: 5px;
+            content: " ";
+            display: table;
+            font-size: 1em;
+            margin: 20px 0;
+            padding: 0 10px
+        }
+
+        dt {
+            color: #7c9090;
+            font-weight: 700;
+            margin: 0 0 5px;
+            width: 80%
+        }
+
+        dd {
+            margin: 0 0 5px 2em;
+            width: 80%
+        }
+
+        em {
+            font-style: normal;
+            font-weight: 700
+        }
+
+        input,
+        textarea {
+            background: #fff;
+            border: 1px dotted;
+            margin: 3px 0;
+            width: 80%
+        }
+
+        textarea {
+            height: 50px
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #ccc;
+            display: block;
+            margin: 1em 0;
+            padding: 0;
+            height: 1px
+        }
+
+        .marker {
+            background: #f8c8c8;
+            background: -webkit-linear-gradient(rgba(248, 200, 200, 0) 50%, #f8c8c8 0%);
+            background: linear-gradient(rgba(248, 200, 200, 0) 50%, #f8c8c8 0%)
+        }
+
+        .dcline {
+            border-left: 8px solid #fcc;
+            margin: 5px 0;
+            padding: 3px
+        }
+
+        .textbox {
+            background: #bbd9d9;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 3px;
+            text-align: center
+        }
+
+        .title {
+            color: #bbd9d9;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin: 2em 0;
+            text-align: right
+        }
+
+        .txt {
+            border-left: 1px dotted;
+            margin: 1em;
+            padding: 0 0 0 1em
+        }
+
+        .frame {
+            background: #fff;
+            padding: 6px;
+            border-radius: 3px;
+            box-shadow: 4px 4px 5px #6d5f5d
+        }
+
+        /* ===================================
+スマホ、タブレット用
+横幅600pxで切り替え
+=================================== */
+
+        @media screen and (max-width: 600px) {
+            body {
+                font-size: 1.4em
+            }
+
+            #wrapper {
+                margin: 0;
+                padding: 20px;
+                width: 100%
+            }
+
+            #contents {
+                background: url(image/back01.gif) no-repeat 0 0
+            }
+
+            #contents,
+            #menu,
+            #main {
+                float: none;
+                height: auto;
+                width: 100%
+            }
+
+            #main {
+                padding: 0;
+                overflow: visible
+            }
+
+            #main-inner {
+                padding: 0 20px 20px
+            }
+
+            nav {
+                padding: 0
+            }
+
+            nav li a,
+            nav li span {
+                border-bottom: 1px dashed #6d5f5d;
+                display: inline-block;
+                height: 3em;
+                line-height: 3em;
+                width: 100%
+            }
+
+            /* 画像の縮小表示 */
+            img {
+                height: auto;
+                max-width: 100%
+            }
+        }
+    </style>
+</head>
+
+<body class="index">
+    {{-- @if (Route::has('login'))
+        <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
+            @auth
+                <a href="{{ url('/home') }}">Home</a>
+            @else
+                <a href="{{ route('login') }}">Log
+                    in</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}"
+                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                @endif
+            @endauth
+        </div>
+    @endif --}}
+    <div id="wrapper">
+
+        <!-- ▼ヘッダ▼ -->
+        <header>
+            <h1>Gameloggd</h1>
+        </header><!-- ▲ヘッダ▲ -->
+
+        <!-- ▼枠▼ -->
+        <div id="contents" class="cf">
+
+            <!-- ▼メニュー▼ -->
+            <div id="menu">
+                <div id="menu-inner">
+                    @if (Route::has('login'))
+                        <nav>
+                            @auth
+                                <li><a href="{{ url('/home') }}">Home</a>
+                            @else
+                               <li><a href="{{ route('login') }}">Log
+                                    in</a>
+
+                                @if (Route::has('register'))
+                                  <li><a href="{{ route('register') }}"
+                                        class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                                @endif
+                            @endauth
+                        </nav>
+                    @endif
+
+                </div>
+            </div><!-- ▲メニュー▲ -->
+
+            <!-- ▼メイン▼ -->
+            <h2>Primer paso</h2>
+            Create una cuenta o logeate!<br>
+
+            <h2>Siguiente</h2>
+
+            Añade tus juegos y clasifícalos!<br>
+            Modifica según el <em>estado</em>
+                <dt>· Jugando</dt>
+                <dt>· Acabado</dt>
+                <dt>· Pausado, etc</dt>
+            Asígnale una <em>plataforma</em> y el <em>género</em> que le corresponda
+                <h3> Guarda/Edita tu colección de juegos</h3>
+                <img src="{{ URL('https://cinni.net/images/stuff/pixel_pet_march___wing_by_beblue.gif') }}">
+
+
+
+        </div><!-- ▲枠▲ -->
+
+        <!-- ▼フッタ▼ -->
+        <footer>
+
+            <a href="http://foollovers.com/" target="_blank">template</a>
+
+        </footer><!-- ▲フッタ▲ -->
+
+    </div><!-- ▲全体の囲み▲ -->
+
+</body>
+
+</html>
