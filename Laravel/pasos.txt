@@ -1,0 +1,45 @@
+- en la consola vamos a htdocs (comprobar node -v, composer -v)
+- comando: composer create-project laravel/laravel nombreProyecto
+- crear base de datos en phpmyadmin
+- dentro del proyecto en la consola: php artisan serve
+- php artisan make:migration nombreTabla
+- en el archivo de migrations creamos las filas de cada tabla
+	-EN: function up():
+        Schema::create('categorias', function(Blueprint $table){
+		$table->engine='InnoDB';
+            $table->bigIncrements('id');
+            $table->string('nombre');
+            $table->timestamps();
+        });
+-para referenciar otra tabla:             
+$table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
+
+- php artisan migrate(:refresh)
+
+- composer require laravel/ui
+- php artisan ui bootstrap --auth
+- npm install
+- npm run dev
+- composer require ibex/crud-generator --dev
+- php artisan vendor:publish --tag=crud
+- php artisan make:crud categorias
+-en web.php (routes): Route::resource('categorias', App\Http\Controllers\CategoriasController::class);
+
+-vistas: añadimos en layout 
+<li class="nav-item">
+                            <a class="nav-link" href="{{ route('libros.index') }}">{{ __('Libros') }}</a>
+                        </li>
+
+- para que nos salga el nombre de la categoria en vez de el ID:
+ en librocontroller
+	-use App\Models\Categoria;
+	-create()  $categorias= Categoria::pluck('nombre', 'id'); //Devuelve un array asociativo
+	- en form.blade. (libro): cambiar text por select
+	- en index.blade: $libro->categoria->nombre
+
+
+------------------------------------------------------------------------------
+·para lanzar el proyecto haga falta haceR (en distintos terminales):
+- npm run dev 
+- php artisan serve
+

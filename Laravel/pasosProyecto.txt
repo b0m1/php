@@ -1,0 +1,22 @@
+- en la consola vamos a htdocs (comprobar node -v, composer -v)
+- comando: composer create-project laravel/laravel nombreProyecto
+- crear base de datos en phpmyadmin
+- abrimos el proyecto y cambiamos en el archivo .env el nombre de la base de datos
+- dentro del proyecto en la consola: php artisan serve
+- gameloggd> php artisan make:migration plataformas
+  gameloggd> php artisan make:migration estados
+  gameloggd> php artisan make:migration juegos
+- creamos en los archivos database>migrations de cada tabla las columnas
+- php artisan migrate(:fresh/:refresh)
+
+- composer require laravel/ui
+- php artisan ui bootstrap --auth
+- npm install
+- npm run dev
+
+gameloggd>composer require ibex/crud-generator --dev
+gameloggd>php artisan vendor:publish --tag=crud
+gameloggd>php artisan make:crud plataformas (debe coincidir con el
+nombre de la tabla)
+gameloggd>php artisan make:crud juegos
+(un crud por cada tabla)
